@@ -92,6 +92,7 @@ int add_folder(char *path, const char *image_path, FATFS fs) {
                         printf("FatFs write error (%d), out of space?\n", res);
                     }
                 }
+                free(block);
                 res = f_close(&fp);
                 if (res) {
                     printf("failed to close file \"%s\", FatFs error %d\n", img_file_path, res);
