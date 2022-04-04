@@ -1,7 +1,13 @@
 BUILD_DIR := ./build/
 OUT_DIR := ./out/
 CFLAGS = -O3
-LDFLAGS = -lc -L/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib
+LDFLAGS = -lc
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Darwin)
+	LDFLAGS += -L/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib
+else
+	LDFLAGS += -e main
+endif
 SRCS := $(shell find . -name '*.c')
 OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
 
