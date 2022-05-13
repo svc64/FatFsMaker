@@ -5,8 +5,6 @@ LDFLAGS = -lc
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Darwin)
 	LDFLAGS += -L/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib
-else
-	LDFLAGS += -e main
 endif
 SRCS := $(shell find . -name '*.c')
 OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
@@ -22,7 +20,7 @@ $(BUILD_DIR)/%.c.o: %.c
 	clang -I. $(CFLAGS) -c $< -o $@
 
 fatfs_maker: dirs $(OBJS)
-	ld $(OBJS) $(LDFLAGS) -o $(OUT_DIR)/fatfs_maker
+	clang $(OBJS) $(LDFLAGS) -o $(OUT_DIR)/fatfs_maker
 
 clean:
 	rm -rf $(OUT_DIR) $(BUILD_DIR) >/dev/null 2>/dev/null || true
